@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Register = () => {
-    return(
+    return (
         <div>
             <p>Register</p>
         </div>
