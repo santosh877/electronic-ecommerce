@@ -39,7 +39,7 @@ const Header = () => {
       path: "/login",
       icon: <UserOutlined />,
       style: {
-        marginLeft: "73%",
+        marginLeft: "auto",
       },
     },
     {

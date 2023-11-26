@@ -1,5 +1,8 @@
+/* eslint-disable import/no-anonymous-default-export */
 // Import the functions you need from the SDKs you need
-import * as firebase from 'firebase';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+// import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,5 +21,7 @@ firebase.initializeApp(firebaseConfig);
 
 //export 
 
-export const auth = firebase.auth();
-export const googleAuthProvider = new firebase.auth.googleAuthProvider();
+const auth = firebase.auth();
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+export  {auth , googleProvider , firebaseConfig};
