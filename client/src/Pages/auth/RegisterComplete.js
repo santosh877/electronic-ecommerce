@@ -6,8 +6,6 @@ import {
   updatePassword,
 } from "firebase/auth";
 import "./register.css";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../Common/firebase";
 import { toast } from "react-toastify";
 
 const RegisterCompletes = ({ history }) => {
@@ -19,9 +17,12 @@ const RegisterCompletes = ({ history }) => {
     const auth = getAuth();
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = window.localStorage.getItem("email");
-      if (!email) {
-        email = window.prompt("Please provide your email for confirmation");
+      if (!registerEmail || !registerPassword) {
+         toast.error("Email or password is not provided.")
       }
+      if (registerPassword.length < 6) {
+        toast.error("Please check the length of password as it must be greater than 6.")
+     }
       // The client SDK will parse the code from the link for you.
      await signInWithEmailLink(auth, email, window.location.href)
         .then(async (result) => {
