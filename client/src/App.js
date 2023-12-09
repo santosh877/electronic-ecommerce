@@ -12,6 +12,7 @@ import RegisterCompletes from "./Pages/auth/RegisterComplete";
 
 import { getAuth } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import ForgotPassword from "./Pages/auth/ForgotPassword";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const App = () => {
           dispatch({
             type: 'LOGGED_IN_USER',
             payload: {
-              name: user.email,
+              email: user.email,
               token: idTokenResult.token,
             }
           })
@@ -45,6 +46,7 @@ const App = () => {
         <Route exact path="/login" Component={Login} />
         <Route exact path="/register" Component={Register} />
         <Route exact path="/register/complete" Component={RegisterCompletes} />
+        <Route exact path="/forgot/password" Component={ForgotPassword}/>
       </Routes>
     </>
   );

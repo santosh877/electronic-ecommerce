@@ -3,19 +3,18 @@ import { Menu } from "antd";
 import {
   AppstoreOutlined,
   SettingOutlined,
-  UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
   LoginOutlined
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
   let dispatch = useDispatch();
-
+  const {user} = useSelector((state) => ({...state}));
 
   const items = [
     {
@@ -24,9 +23,12 @@ const Header = () => {
       path: "/",
       icon: <AppstoreOutlined />,
     },
-    {
-      label: "User Name",
+    user && {
+      label: user.email && user.email.split('@')[0],
       key: "SubMenu",
+      style: {
+        marginLeft: "auto",
+      },
       icon: <SettingOutlined />,
       children: [
         {
@@ -45,7 +47,7 @@ const Header = () => {
         },
       ],
     },
-    {
+    !user && {
       label: <Link to="/login">Login</Link>,
       key: "login",
       path: "/login",
@@ -54,7 +56,7 @@ const Header = () => {
         marginLeft: "auto",
       },
     },
-    {
+    !user &&  {
       label: <Link to="/register">Register</Link>,
       key: "register",
       path: "/register",
