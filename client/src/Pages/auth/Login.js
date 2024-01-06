@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from'axios';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -25,6 +26,8 @@ const Login = () => {
     }
   }, [user]);
 
+ 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,15 +39,21 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         const idTokenResult = await user.getIdTokenResult();
-
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
-        window.location.href = "/";
+        createOrUpdateUser(idTokenResult.token).then((res) => 
+       // alert(2)
+        console.log("CREATE OR UPDATE USER RES", res)
+        ).catch((err) =>
+          console.log(err)
+        );
+   
+        // dispatch({
+        //   type: "LOGGED_IN_USER",
+        //   payload: {
+        //     email: user.email,
+        //     token: idTokenResult.token,
+        //   },
+        // });
+        // window.location.href = "/";
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -54,6 +63,13 @@ const Login = () => {
         setLoading(false);
       });
   };
+  const createOrUpdateUser = async (token) => {
+     return await axios.post(`${process.env.REACT_APP_API}/create-or-update-user`, {} ,{
+      headers: {
+        authToken: token
+      }
+     })
+  }
 
   const handleGoogleLogin = async () => {
     const auth = getAuth();

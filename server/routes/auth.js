@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+//middlewares
+const {authCheck} = require('../middlewares/auth')
+
+//controllers
+const {createOrUpdateUser} = require('../Controllers/auth')
+
 //Route
-router.get('/create-or-update-user' , (req, res) => {
-    res.json({
-       data: 'hey you hit the node API updated',
-    })
-});
+router.post('/create-or-update-user' , authCheck , createOrUpdateUser);
 
 module.exports = router;
